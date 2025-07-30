@@ -1,0 +1,109 @@
+services:
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file: .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: always
+    networks:
+      - app_network
+  frontend:
+    build:
+      context: ./frontend_ui
+      dockerfile: Dockerfile
+    container_name: frontend
+    # volumes:
+    #   - ./frontend_ui:/app
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+  nginx:
+    build:
+      context: ./servers/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app_network
+    container_name: nginx
+    volumes:
+      - ./servers/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+  #   container_name: elasticsearch
+  #   environment:
+  #     - discovery.type=single-node
+  #     - xpack.security.enabled=true # Enable security
+  #     - ELASTIC_PASSWORD=mypass # Set the password for the "elastic" user
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # Set JVM heap size
+  #   ports:
+  #     - 9200:9200 # Elasticsearch HTTP API
+  #     - 9300:9300 # Elasticsearch transport
+  #   depends_on:
+  #     - backend
+  #   volumes:
+  #     - es_data:/usr/share/elasticsearch/data
+  #   networks:
+  #     - app_network
+
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:8.8.0
+  #   container_name: logstash
+  #   depends_on:
+  #     - elasticsearch
+  #   volumes:
+  #     - ./backend/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro # Mount the Logstash config file
+  #   ports:
+  #     - 5044:5044 # Logstash Beats input
+  #     - 9600:9600 # Logstash monitoring API
+  #   environment:
+  #     LS_JAVA_OPTS: "-Xms256m -Xmx256m"
+  #   networks:
+  #     - app_network
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:8.8.0
+  #   container_name: kibana
+  #   depends_on:
+  #     - elasticsearch
+  #   environment:
+  #     - ELASTICSEARCH_HOST=https://localhost/elasticsearch
+  #     - ELASTICSEARCH_SERVICE_TOKEN=AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYTowVDdQRGhTZ1ItcVlULUZQbS1iaUxn # Replace with your service token
+  #     - SERVER_HOST=0.0.0.0
+  #     - XPACK_SECURITY_ENABLED=true
+  #     - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=a_secure_random_key_for_encryption
+  #     - XPACK_REPORTING_ENCRYPTIONKEY=another_secure_random_key
+  #     - MONITORING_UI_ENABLED=true
+  #     - CSP_STRICT=false # Disable strict CSP
+  #   ports:
+  #     - 5601:5601
+  #   networks:
+  #     - app_network
+
+volumes:
+  db_data:
+  es_data:
+    driver: local
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge
