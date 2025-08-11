@@ -1,61 +1,62 @@
+# 🎮 Transcendence – Full-Stack Multiplayer Web Gaming Platform
 
-finished(major modules):
-	web:
-		◦ Major module: Use a framework to build the backend.
-		◦ Minor module: Use a framework or a toolkit to build the frontend.
-		◦ Major module: Store the score of a tournament in the Blockchain.
-	User Management: 
-		◦ Major module: Standard user management, authentication, users across tournaments.
-		◦ Major module: Implementing a remote authentication.
-	Gameplay and user experience:
-		◦ Major module: Remote players (pc)
-		◦ Major module: Multiplayer (more than 2 players in the same game). 
-		◦ Major module: Live chat.(pc????????)
-	AI-Algo
-		◦ Major module: Introduce an AI opponent.
-		◦ Minor module: User and game stats dashboards
-	Cybersecurity
-		◦ Major module: Implement Two-Factor Authentication (2FA) and JWT.
-	Graphics:
-		◦ Major module: Use advanced 3D techniques.
-	Server-Side Pong
-		◦ Major module: Replace basic Pong with server-side Pong and implement an API.
+A **real-time multiplayer Pong-style gaming platform** built as part of the 42 Vienna software engineering curriculum.  
+The platform integrates modern **web technologies, authentication, chat, tournaments, and blockchain score storage** — designed for scalability, modularity, and extensibility.
 
+---
 
-   location /api/ {
-            proxy_pass https://backend;
-   
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
+## 🚀 Features
 
+- **Real-Time Multiplayer Pong** using WebSockets
+- **Authentication**
+  - JWT-based login
+  - Two-Factor Authentication (2FA)
+- **Chat System**
+  - Global and private channels
+  - User blocking functionality
+- **Tournament Module**
+  - Automated match scheduling
+  - Live score updates
+- **Blockchain Integration**
+  - Avalanche testnet smart contracts for immutable tournament result storage
+- **3D Game Rendering** using Babylon.js
+- Modular architecture with reusable components
 
+---
 
+## 🛠 Tech Stack
 
-docker logs logstash
+**Frontend**
+- TypeScript
+- HTML5 + CSS3 (Tailwind CSS)
+- WebSockets
+- Babylon.js (3D game engine)
+- Custom Web Components
 
-curl -k https://localhost/elasticsearch/_cat/indices
+**Backend**
+- Node.js + Fastify
+- WebSockets (real-time messaging)
+- JSON Web Tokens (JWT)
+- Two-Factor Authentication (TOTP)
 
+**Blockchain**
+- Avalanche Fuji Testnet
+- Solidity Smart Contracts
+- ethers.js for blockchain interactions
 
-console.log('Elasticsearch Node URL:', 'https://localhost/elasticsearch');
+**Other Tools**
+- Docker (containerized development)
+- Git & GitHub (version control)
+- Agile/SCRUM methodology
 
+---
 
-curl -k https://localhost/elasticsearch
+## 📂 Project Structure
 
-
-git pull origin main
-# Resolve conflicts if necessary
-git add <file_with_conflict>
-git commit -m "Merged latest changes from remote repository"
-git push origin main
-
-
-git checkout main
-git pull origin main
-git fetch origin cb
-git merge origin/cb
-# Resolve conflicts if necessary
-git add <file_with_conflict>
-git commit -m "Merged cb branch into main"
-git push origin main
+```bash
+transcendence/
+├── backend/            # Fastify server, WebSocket handlers, authentication
+├── frontend/           # TypeScript web components, Babylon.js game logic
+├── blockchain/         # Smart contract & ethers.js integration scripts
+├── docker/             # Docker configuration files
+└── README.md           # This file
