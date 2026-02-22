@@ -1,36 +1,33 @@
-# Test Cases - Authentication Module
+Test Cases - Authentication Module
 
-**Module:** User Registration & Login  
-**Version:** 1.0  
-**Date:** February 2026
+Module: User Registration & Login  
 
----
 
 ## TC-AUTH-001: User Registration - Valid Credentials
 
-**Objective:** Verify user can register with valid email and password
+Objective: Verify user can register with valid email and password
 
 | Field | Value |
 |-------|-------|
-| **Test Case ID** | TC-AUTH-001 |
-| **Priority** | P0 (Critical) |
-| **Type** | Functional |
-| **Precondition** | User not registered, registration page accessible |
+| Test Case ID | TC-AUTH-001 |
+| Priority | P0 (Critical) |
+| Type | Functional |
+| Precondition | User not registered, registration page accessible |
 
-**Steps:**
-1. Navigate to registration page
-2. Enter valid email (e.g., test@example.com)
-3. Enter strong password (min 8 chars, numbers, special chars)
-4. Confirm password
-5. Click "Register" button
+    Steps:
+    1. Navigate to registration page
+    2. Enter valid email (e.g., test@example.com)
+    3. Enter strong password (min 8 chars, numbers, special chars)
+    4. Confirm password
+    5. Click "Register" button
 
-**Expected Results:**
-- ✅ User account created successfully
-- ✅ Message: "Registration successful"
-- ✅ Redirected to login page
-- ✅ User data stored in database with hashed password
+    Expected Results:
+    - User account created successfully
+    - Message: "Registration successful"
+    - Redirected to login page
+    - User data stored in database with hashed password
 
-**Actual Results:**
+Actual Results:
 - [To be filled during execution]
 
 **Status:** ⏳ Pending | ✅ Passed | ❌ Failed
